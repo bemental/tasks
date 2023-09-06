@@ -7,6 +7,7 @@ function App(): JSX.Element {
             <header className="App-header">
                 UM COS420 with React Hooks and TypeScript
             </header>
+            <p>Andrew Bement Was Here</p>
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
                 automatically reload.
