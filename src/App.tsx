@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { Button, Col, Container, Row } from "react-bootstrap";
 
 function App(): JSX.Element {
     return (
@@ -7,6 +8,35 @@ function App(): JSX.Element {
             <header className="App-header">
                 UM COS420 with React Hooks and TypeScript
             </header>
+            <h1>This is header text</h1>
+            <img
+                src="https://greglnelson.github.io/react-hooks-typescript-tome/images/logo.png"
+                alt="typescriot image"
+            ></img>
+            <ul>
+                <li>First thing</li>
+                <li>Another thing</li>
+                <li>A third item</li>
+            </ul>
+            <div>
+                <Button onClick={() => console.log("Hello World!")}>
+                    Log Hello World
+                </Button>
+            </div>
+            <div>
+                <Container>
+                    <Row>
+                        <Col>
+                            First column.
+                            <div id="rectangle"></div>
+                        </Col>
+                        <Col>
+                            Second column.
+                            <div id="rectangle"></div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
             <p>Andrew Bement Was Here</p>
             <p>Hello World!</p>
             <p>
