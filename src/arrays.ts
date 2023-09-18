@@ -1,3 +1,7 @@
+// * YOU MAY NOT USE for LOOPS, while LOOPS, or recursion!
+// * You MUST use the array methods we have taught you.
+// * You must also avoid mutating the original arrays - all changes must be immutable!
+
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -5,7 +9,23 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    console.log(`Numbers Array Contains: ${numbers.join(", ")}`);
+    const bookEndArray: number[] = [];
+    //
+    // check if numbers array is empty first
+    if (numbers.length != 0) {
+        bookEndArray.push(numbers[0]);
+        bookEndArray.push(numbers[numbers.length - 1]);
+        //
+        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+
+        return bookEndArray;
+    //    
+    // empty array detected, return empty bookend array
+    } else {
+        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+        return bookEndArray;
+    }
 }
 
 /**
