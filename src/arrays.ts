@@ -9,7 +9,7 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    console.log(`Numbers Array Contains: ${numbers.join(", ")}`);
+    //console.log(`Numbers Array Contains: ${numbers.join(", ")}`);
     const bookEndArray: number[] = [];
     //
     // check if numbers array is empty first
@@ -17,13 +17,13 @@ export function bookEndList(numbers: number[]): number[] {
         bookEndArray.push(numbers[0]);
         bookEndArray.push(numbers[numbers.length - 1]);
         //
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+        // console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
 
         return bookEndArray;
-    //    
+    //
     // empty array detected, return empty bookend array
     } else {
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+        //console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
         return bookEndArray;
     }
 }
@@ -33,7 +33,9 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripledNumbers = numbers.map((number) => number * 3);
+    //
+    return tripledNumbers;
 }
 
 /**
@@ -41,7 +43,12 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const integersFromStringArray = numbers.map((str) => {
+        const value = parseInt(str, 10);
+        return isNaN(value) ? 0 : value;
+    });
+    //
+    return integersFromStringArray;
 }
 
 /**
@@ -52,7 +59,13 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const numbersWithDollarSignsRemoved = amounts.map((str) => {
+        const sanitizedString = str.replace(/^\$/, ""); // Remove '$' at the beginning if it exists
+        const valueAsInt = parseInt(sanitizedString, 10);
+        return isNaN(valueAsInt) ? 0 : valueAsInt;
+    });
+    //
+    return numbersWithDollarSignsRemoved;
 };
 
 /**
@@ -61,7 +74,10 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const processedMessages = messages
+        .filter((msg) => !msg.endsWith("?"))
+        .map((msg) => (msg.endsWith("!") ? msg.toUpperCase() : msg));
+    return processedMessages;
 };
 
 /**
@@ -69,7 +85,10 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const wordsLessThanFourCharacters = words.filter(
+        (word) => word.length < 4
+    ).length;
+    return wordsLessThanFourCharacters;
 }
 
 /**
@@ -78,7 +97,8 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const validColors = ["red", "blue", "green"];
+    return colors.every((color) => validColors.includes(color));
 }
 
 /**
@@ -89,7 +109,12 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) return "0=0";
+
+    const stringRepresentation = addends.join("+");
+    const totalSum = addends.reduce((acc, num) => acc + num, 0);
+
+    return `${totalSum}=${stringRepresentation}`;
 }
 
 /**
@@ -102,5 +127,48 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    console.log(`originalArray; Array Contains: ${values.join(", ")}`);
+    //
+    const negativeIndex = values.findIndex((num) => num < 0);
+    console.log(`negativeIndex: ${negativeIndex}`);
+    //
+    let numbersToSum = values;
+    const beforeSummingNumbers = values;
+    let summationOfNumbers = 0;
+    //
+    if (negativeIndex == -1) {
+        numbersToSum.reduce((acc, num) => acc + num, 0);
+        console.log(`numbers to sum: ${numbersToSum}`);
+        summationOfNumbers = numbersToSum
+            .slice(0, values.length)
+            .reduce((acc, val) => acc + val, 0);
+        console.log(`summation: ${summationOfNumbers}`);
+        //
+        numbersToSum.push(summationOfNumbers);
+        console.log(`final array: ${numbersToSum}`);
+        return numbersToSum;
+    // summation of numbers up to the negative index, no further
+    } else {
+        // determines which numbers to sum
+        numbersToSum = numbersToSum.slice(0, negativeIndex);
+        console.log(`numbers to sum: ${numbersToSum}`);
+        // summates all of the numbers together
+        summationOfNumbers = numbersToSum
+            .slice(0, negativeIndex + 1)
+            .reduce((acc, val) => acc + val, 0);
+        console.log(`summation: ${summationOfNumbers}`);
+        // insert the summated numbers into the location of the negative index
+        // TODO: - currently borked
+        const finalArray = values;
+        finalArray.splice(negativeIndex + 1, 0, summationOfNumbers);
+        console.log(`final array: ${finalArray}`);
+        return finalArray;
+    }
+}
+function slice(arg0: number, arg1: number) {
+    throw new Error("Function not implemented.");
+}
+
+function reduce(arg0: (acc: any, num: any) => any, arg1: number) {
+    throw new Error("Function not implemented.");
 }
