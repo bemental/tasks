@@ -17,13 +17,13 @@ export function bookEndList(numbers: number[]): number[] {
         bookEndArray.push(numbers[0]);
         bookEndArray.push(numbers[numbers.length - 1]);
         //
-        // console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
 
         return bookEndArray;
-    //
-    // empty array detected, return empty bookend array
+        //
+        // empty array detected, return empty bookend array
     } else {
-        //console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
+        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
         return bookEndArray;
     }
 }
@@ -127,10 +127,10 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    console.log(`originalArray; Array Contains: ${values.join(", ")}`);
+    // console.log(`originalArray; Array Contains: ${values.join(", ")}`);
     //
     const negativeIndex = values.findIndex((num) => num < 0);
-    console.log(`negativeIndex: ${negativeIndex}`);
+    // console.log(`negativeIndex: ${negativeIndex}`);
     //
     let numbersToSum = values;
     const beforeSummingNumbers = values;
@@ -138,37 +138,52 @@ export function injectPositive(values: number[]): number[] {
     //
     if (negativeIndex == -1) {
         numbersToSum.reduce((acc, num) => acc + num, 0);
-        console.log(`numbers to sum: ${numbersToSum}`);
+        // console.log(`numbers to sum: ${numbersToSum}`);
         summationOfNumbers = numbersToSum
             .slice(0, values.length)
             .reduce((acc, val) => acc + val, 0);
-        console.log(`summation: ${summationOfNumbers}`);
+
+        if (summationOfNumbers != 0) {
+            numbersToSum.push(summationOfNumbers);
+            // console.log(`summation: ${summationOfNumbers}`);
+        } else {
+            // console.log(`summation: ${summationOfNumbers}`);
+            // console.log("not inserting summation because no numbers to sum");
+        }
+
         //
-        numbersToSum.push(summationOfNumbers);
-        console.log(`final array: ${numbersToSum}`);
+        if (numbersToSum.length == 0) {
+            // console.log(
+            //     "empty array detected, returning array with a single element of zero ([0])"
+            // );
+            numbersToSum = [0];
+        }
+
+        // console.log(`final array: ${numbersToSum}`);
         return numbersToSum;
-    // summation of numbers up to the negative index, no further
+
+        // summation of numbers up to the negative index, no further
     } else {
         // determines which numbers to sum
         numbersToSum = numbersToSum.slice(0, negativeIndex);
-        console.log(`numbers to sum: ${numbersToSum}`);
+        // console.log(`numbers to sum: ${numbersToSum}`);
         // summates all of the numbers together
         summationOfNumbers = numbersToSum
             .slice(0, negativeIndex + 1)
             .reduce((acc, val) => acc + val, 0);
-        console.log(`summation: ${summationOfNumbers}`);
+        // console.log(`summation: ${summationOfNumbers}`);
         // insert the summated numbers into the location of the negative index
         // TODO: - currently borked
         const finalArray = values;
         finalArray.splice(negativeIndex + 1, 0, summationOfNumbers);
-        console.log(`final array: ${finalArray}`);
+        // console.log(`final array: ${finalArray}`);
         return finalArray;
     }
 }
-function slice(arg0: number, arg1: number) {
-    throw new Error("Function not implemented.");
-}
+// function slice(arg0: number, arg1: number) {
+//     throw new Error("Function not implemented.");
+// }
 
-function reduce(arg0: (acc: any, num: any) => any, arg1: number) {
-    throw new Error("Function not implemented.");
-}
+// function reduce(arg0: (acc: any, num: any) => any, arg1: number) {
+//     throw new Error("Function not implemented.");
+// }
