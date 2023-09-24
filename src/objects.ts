@@ -43,7 +43,15 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    if (question.type === "short_answer_question") {
+        return true; // Any answer is valid for short_answer_question
+    }
+
+    if (question.type === "multiple_choice_question" && question.options) {
+        return question.options.includes(answer);
+    }
+
+    return false; // Default to false for any other scenarios
 }
 
 /**
