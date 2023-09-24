@@ -9,23 +9,13 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    //console.log(`Numbers Array Contains: ${numbers.join(", ")}`);
-    const bookEndArray: number[] = [];
-    //
-    // check if numbers array is empty first
-    if (numbers.length != 0) {
-        bookEndArray.push(numbers[0]);
-        bookEndArray.push(numbers[numbers.length - 1]);
-        //
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
-
-        return bookEndArray;
-        //
-        // empty array detected, return empty bookend array
-    } else {
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
-        return bookEndArray;
+    if (numbers.length === 0) {
+        return [];
     }
+    if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    }
+    return [numbers[0], numbers[numbers.length - 1]];
 }
 
 /**
