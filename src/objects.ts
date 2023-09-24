@@ -166,5 +166,14 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    return {
+        id: id,
+        name: name,
+        body: contentQuestion.body,
+        type: contentQuestion.type,
+        options: contentQuestion.options, // assuming options is not mandatory
+        expected: contentQuestion.expected, // assuming expected is not mandatory
+        points: points,
+        published: false // set published status to false
+    };
 }
