@@ -9,23 +9,13 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    //console.log(`Numbers Array Contains: ${numbers.join(", ")}`);
-    const bookEndArray: number[] = [];
-    //
-    // check if numbers array is empty first
-    if (numbers.length != 0) {
-        bookEndArray.push(numbers[0]);
-        bookEndArray.push(numbers[numbers.length - 1]);
-        //
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
-
-        return bookEndArray;
-        //
-        // empty array detected, return empty bookend array
-    } else {
-        console.log(`Bookend Array Contains: ${bookEndArray.join(", ")}`);
-        return bookEndArray;
+    if (numbers.length === 0) {
+        return [];
     }
+    if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    }
+    return [numbers[0], numbers[numbers.length - 1]];
 }
 
 /**
@@ -127,63 +117,20 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    // console.log(`originalArray; Array Contains: ${values.join(", ")}`);
-    //
-    const negativeIndex = values.findIndex((num) => num < 0);
-    // console.log(`negativeIndex: ${negativeIndex}`);
-    //
-    let numbersToSum = values;
-    const beforeSummingNumbers = values;
-    let summationOfNumbers = 0;
-    //
-    if (negativeIndex == -1) {
-        numbersToSum.reduce((acc, num) => acc + num, 0);
-        // console.log(`numbers to sum: ${numbersToSum}`);
-        summationOfNumbers = numbersToSum
-            .slice(0, values.length)
-            .reduce((acc, val) => acc + val, 0);
+    const sumUntilFirstNegative = values
+        .slice(0, values.findIndex((val) => val < 0) + 1 || values.length)
+        .reduce((acc, curr) => acc + (curr > 0 ? curr : 0), 0);
 
-        if (summationOfNumbers != 0) {
-            numbersToSum.push(summationOfNumbers);
-            // console.log(`summation: ${summationOfNumbers}`);
-        } else {
-            // console.log(`summation: ${summationOfNumbers}`);
-            // console.log("not inserting summation because no numbers to sum");
-        }
-
-        //
-        if (numbersToSum.length == 0) {
-            // console.log(
-            //     "empty array detected, returning array with a single element of zero ([0])"
-            // );
-            numbersToSum = [0];
-        }
-
-        // console.log(`final array: ${numbersToSum}`);
-        return numbersToSum;
-
-        // summation of numbers up to the negative index, no further
-    } else {
-        // determines which numbers to sum
-        numbersToSum = numbersToSum.slice(0, negativeIndex);
-        // console.log(`numbers to sum: ${numbersToSum}`);
-        // summates all of the numbers together
-        summationOfNumbers = numbersToSum
-            .slice(0, negativeIndex + 1)
-            .reduce((acc, val) => acc + val, 0);
-        // console.log(`summation: ${summationOfNumbers}`);
-        // insert the summated numbers into the location of the negative index
-        // TODO: - currently borked
-        const finalArray = values;
-        finalArray.splice(negativeIndex + 1, 0, summationOfNumbers);
-        // console.log(`final array: ${finalArray}`);
-        return finalArray;
+    // If there are no negatives, simply append the sum.
+    if (values.every((val) => val >= 0)) {
+        return [...values, sumUntilFirstNegative];
     }
-}
-// function slice(arg0: number, arg1: number) {
-//     throw new Error("Function not implemented.");
-// }
 
-// function reduce(arg0: (acc: any, num: any) => any, arg1: number) {
-//     throw new Error("Function not implemented.");
-// }
+    // Insert sum after the first negative.
+    const firstNegativeIndex = values.findIndex((val) => val < 0);
+    return [
+        ...values.slice(0, firstNegativeIndex + 1),
+        sumUntilFirstNegative,
+        ...values.slice(firstNegativeIndex + 1)
+    ];
+}
