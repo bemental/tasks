@@ -141,7 +141,7 @@ export function sameType(questions: Question[]): boolean {
 
     const firstType = questions[0].type;
 
-    return questions.every(question => question.type === firstType);
+    return questions.every((question) => question.type === firstType);
 }
 
 /***
@@ -149,13 +149,16 @@ export function sameType(questions: Question[]): boolean {
  * except that a blank question has been added onto the end. Reuse the `makeBlankQuestion`
  * you defined in the `objects.ts` file.
  */
+import { makeBlankQuestion } from './objects.ts';
+
 export function addNewQuestion(
     questions: Question[],
     id: number,
     name: string,
     type: QuestionType
 ): Question[] {
-    return [];
+    const newQuestion = makeBlankQuestion(id, name, type);
+    return [...questions, newQuestion];
 }
 
 /***
