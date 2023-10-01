@@ -24,6 +24,15 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
 //     );
 // }
 
+export function getNonEmptyQuestions(questions: Question[]): Question[] {
+    return questions.filter(
+        (question) =>
+            question.body !== "" ||
+            question.expected !== "" ||
+            question.options.length > 0
+    );
+}
+
 /***
  * Consumes an array of questions and returns the question with the given `id`. If the
  * question is not found, return `null` instead.
