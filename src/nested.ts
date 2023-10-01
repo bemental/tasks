@@ -191,7 +191,7 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return questions.map(question => {
+    return questions.map((question) => {
         if (question.id === targetId) {
             const updatedQuestion = { ...question, type: newQuestionType };
 
@@ -216,14 +216,30 @@ export function changeQuestionTypeById(
  * Remember, if a function starts getting too complicated, think about how a helper function
  * can make it simpler! Break down complicated tasks into little pieces.
  */
+function editOptions(options: string[], targetOptionIndex: number, newOption: string): string[] {
+    if (targetOptionIndex === -1) {
+        return [...options, newOption]; // Add to the end
+    } else {
+        const newOptions = [...options]; // Create a copy
+        newOptions[targetOptionIndex] = newOption; // Replace the specified index
+        return newOptions;
+    }
+}
+
 export function editOption(
     questions: Question[],
     targetId: number,
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    return questions.map(question => {
+        if (question.id === targetId) {
+            return { ...question, options: editOptions(question.options, targetOptionIndex, newOption) };
+        }
+        return question;
+    });
 }
+
 
 /***
  * Consumes an array of questions, and produces a new array based on the original array.
