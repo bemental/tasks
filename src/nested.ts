@@ -9,15 +9,20 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
     return questions.filter((question) => question.published);
 }
 
-
 /**
  * Consumes an array of questions and returns a new array of only the questions that are
  * considered "non-empty". An empty question has an empty string for its `body` and
  * `expected`, and an empty array for its `options`.
  */
-export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return [];
-}
+
+// export function getNonEmptyQuestions(questions: Question[]): Question[] {
+//     return questions.filter(
+//         (question) =>
+//             question.body !== "" &&
+//             question.expected !== "" &&
+//             question.options.length > 0
+//     );
+// }
 
 /***
  * Consumes an array of questions and returns the question with the given `id`. If the
@@ -27,6 +32,11 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
+    for (const question of questions) {
+        if (question.id === id) {
+            return question;
+        }
+    }
     return null;
 }
 
