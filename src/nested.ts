@@ -149,7 +149,7 @@ export function sameType(questions: Question[]): boolean {
  * except that a blank question has been added onto the end. Reuse the `makeBlankQuestion`
  * you defined in the `objects.ts` file.
  */
-import { makeBlankQuestion } from './objects.ts';
+import { makeBlankQuestion } from "./objects";
 
 export function addNewQuestion(
     questions: Question[],
@@ -205,7 +205,6 @@ export function changeQuestionTypeById(
     });
 }
 
-
 /**
  * Consumes an array of Questions and produces a new array of Questions, where all
  * the Questions are the same EXCEPT for the one with the given `targetId`. That
@@ -216,7 +215,11 @@ export function changeQuestionTypeById(
  * Remember, if a function starts getting too complicated, think about how a helper function
  * can make it simpler! Break down complicated tasks into little pieces.
  */
-function editOptions(options: string[], targetOptionIndex: number, newOption: string): string[] {
+function editOptions(
+    options: string[],
+    targetOptionIndex: number,
+    newOption: string
+): string[] {
     if (targetOptionIndex === -1) {
         return [...options, newOption]; // Add to the end
     } else {
@@ -232,14 +235,20 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return questions.map(question => {
+    return questions.map((question) => {
         if (question.id === targetId) {
-            return { ...question, options: editOptions(question.options, targetOptionIndex, newOption) };
+            return {
+                ...question,
+                options: editOptions(
+                    question.options,
+                    targetOptionIndex,
+                    newOption
+                )
+            };
         }
         return question;
     });
 }
-
 
 /***
  * Consumes an array of questions, and produces a new array based on the original array.
@@ -247,10 +256,24 @@ export function editOption(
  * the duplicate inserted directly after the original question. Use the `duplicateQuestion`
  * function you defined previously; the `newId` is the parameter to use for the duplicate's ID.
  */
+import { duplicateQuestion } from "./objects";
+
 export function duplicateQuestionInArray(
     questions: Question[],
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const result: Question[] = [];
+
+    for (const question of questions) {
+        result.push(question); // Add the current question to the result
+
+        // If it's the target question, duplicate it and add the duplicate to the result
+        if (question.id === targetId) {
+            const duplicated = duplicateQuestion(newId, question);
+            result.push(duplicated);
+        }
+    }
+
+    return result;
 }
