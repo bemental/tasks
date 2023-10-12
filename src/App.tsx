@@ -1,6 +1,12 @@
 import React from "react";
 import "./App.css";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { Counter } from "./components/Counter";
+import { RevealAnswer } from "./components/RevealAnswer";
+import { ChangeType } from "./components/ChangeType";
+import { StartAttempt } from "./components/StartAttempt";
+import TwoDice from "./components/TwoDice";
+import { CycleHoliday } from "./components/CycleHoliday"; // Make sure this path is correct
 
 function App(): JSX.Element {
     return (
@@ -11,13 +17,24 @@ function App(): JSX.Element {
             <h1>This is header text</h1>
             <img
                 src="https://greglnelson.github.io/react-hooks-typescript-tome/images/logo.png"
-                alt="typescriot image"
+                alt="typescript image"
             ></img>
+            <p>
+                Counter: <Counter></Counter>
+            </p>
+            <RevealAnswer />
+            <ChangeType />
+            <StartAttempt />
+            <TwoDice />
+            <CycleHoliday />
+
+            {/* Inserting the list here */}
             <ul>
-                <li>First thing</li>
-                <li>Another thing</li>
-                <li>A third item</li>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
             </ul>
+
             <div>
                 <Button onClick={() => console.log("Hello World!")}>
                     Log Hello World
