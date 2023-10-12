@@ -1,16 +1,73 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 
-/**
- * Here is a helper function you *must* use to "roll" your die.
- * The function uses the builtin `random` function of the `Math`
- * module (which returns a random decimal between 0 up until 1) in order
- * to produce a random integer between 1 and 6 (inclusive).
- */
-export function d6(): number {
-    return 1 + Math.floor(Math.random() * 6);
-}
+type GameState = "PLAYING" | "WIN" | "LOSE";
 
-export function TwoDice(): JSX.Element {
-    return <div>Two Dice</div>;
-}
+const TwoDice: React.FC = () => {
+    const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
+    const [leftDie, setLeftDie] = useState<number>(getRandomNumber());
+    const [rightDie, setRightDie] = useState<number>(getRandomNumber());
+    const [gameState, setGameState] = useState<GameState>("PLAYING");
+
+    const checkGameStatus = () => {
+        if (leftDie === rightDie) {
+            setGameState("WIN");
+        } else if (leftDie === 1 && rightDie === 1) {
+            setGameState("LOSE");
+        } else {
+            setGameState("PLAYING");
+        }
+    };
+
+    const rollLeft = () => {
+        let newNumber = getRandomNumber();
+        while (newNumber === leftDie) {
+            newNumber = getRandomNumber();
+        }
+        setLeftDie(newNumber);
+    };
+
+    const rollRight = () => {
+        let newNumber = getRandomNumber();
+        while (newNumber === rightDie) {
+            newNumber = getRandomNumber();
+        }
+        setRightDie(newNumber);
+    };
+
+    const rollBoth = () => {
+        let newLeftDie = getRandomNumber();
+        let newRightDie = getRandomNumber();
+        while (newLeftDie === leftDie) {
+            newLeftDie = getRandomNumber();
+        }
+        while (newRightDie === rightDie) {
+            newRightDie = getRandomNumber();
+        }
+        setLeftDie(newLeftDie);
+        setRightDie(newRightDie);
+    };
+
+    useEffect(() => {
+        checkGameStatus();
+    }, [leftDie, rightDie]);
+
+    return (
+        <div>
+            <div data-testid="left-die">{leftDie}</div>
+            <button data-testid="left-button" onClick={rollLeft}>
+                Roll Left
+            </button>
+            <div data-testid="right-die">{rightDie}</div>
+            <button data-testid="right-button" onClick={rollRight}>
+                Roll Right
+            </button>
+            <button data-testid="roll-button" onClick={rollBoth}>
+                Roll Both
+            </button>
+            {gameState === "WIN" && <div>Win</div>}
+            {gameState === "LOSE" && <div>Lose</div>}
+        </div>
+    );
+};
+
+export default TwoDice;

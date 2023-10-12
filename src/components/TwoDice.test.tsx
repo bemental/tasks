@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { TwoDice } from "./TwoDice";
+import TwoDice from "./TwoDice";
 import { extractDigits } from "./StartAttempt.test";
 
 describe("TwoDice Component tests", () => {
