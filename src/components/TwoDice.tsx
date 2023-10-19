@@ -3,16 +3,22 @@ import React, { useState, useEffect } from "react";
 type GameState = "PLAYING" | "WIN" | "LOSE";
 
 const TwoDice: React.FC = () => {
-    const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
+    const getRandomNumber = (excluding?: number): number => {
+        let result: number;
+        do {
+            result = Math.floor(Math.random() * 6) + 1;
+        } while (result === excluding); // Loop until we get a number different than 'excluding'
+        return result;
+    };
     const [leftDie, setLeftDie] = useState<number>(getRandomNumber());
-    const [rightDie, setRightDie] = useState<number>(getRandomNumber());
+    const [rightDie, setRightDie] = useState<number>(getRandomNumber(leftDie));
     const [gameState, setGameState] = useState<GameState>("PLAYING");
 
     const checkGameStatus = () => {
-        if (leftDie === rightDie) {
-            setGameState("WIN");
-        } else if (leftDie === 1 && rightDie === 1) {
+        if (leftDie === 1 && rightDie === 1) {
             setGameState("LOSE");
+        } else if (leftDie === rightDie) {
+            setGameState("WIN");
         } else {
             setGameState("PLAYING");
         }
@@ -34,19 +40,6 @@ const TwoDice: React.FC = () => {
         setRightDie(newNumber);
     };
 
-    const rollBoth = () => {
-        let newLeftDie = getRandomNumber();
-        let newRightDie = getRandomNumber();
-        while (newLeftDie === leftDie) {
-            newLeftDie = getRandomNumber();
-        }
-        while (newRightDie === rightDie) {
-            newRightDie = getRandomNumber();
-        }
-        setLeftDie(newLeftDie);
-        setRightDie(newRightDie);
-    };
-
     useEffect(() => {
         checkGameStatus();
     }, [leftDie, rightDie]);
@@ -60,9 +53,6 @@ const TwoDice: React.FC = () => {
             <div data-testid="right-die">{rightDie}</div>
             <button data-testid="right-button" onClick={rollRight}>
                 Roll Right
-            </button>
-            <button data-testid="roll-button" onClick={rollBoth}>
-                Roll Both
             </button>
             {gameState === "WIN" && <div>Win</div>}
             {gameState === "LOSE" && <div>Lose</div>}
