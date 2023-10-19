@@ -22,6 +22,7 @@ export function ChooseTeam(): JSX.Element {
 
     function clearTeam() {
         setTeam([]);
+
     }
 
     return (
@@ -35,7 +36,8 @@ export function ChooseTeam(): JSX.Element {
                             <Button
                                 onClick={() => chooseMember(option)}
                                 size="sm"
-                            >
+                           >
+
                                 {option}
                             </Button>
                         </div>
