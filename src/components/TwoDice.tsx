@@ -3,15 +3,9 @@ import React, { useState, useEffect } from "react";
 type GameState = "PLAYING" | "WIN" | "LOSE";
 
 const TwoDice: React.FC = () => {
-    const getRandomNumber = (excluding?: number): number => {
-        let result: number;
-        do {
-            result = Math.floor(Math.random() * 6) + 1;
-        } while (result === excluding); // Loop until we get a number different than 'excluding'
-        return result;
-    };
+    const getRandomNumber = () => Math.floor(Math.random() * 6) + 1;
     const [leftDie, setLeftDie] = useState<number>(getRandomNumber());
-    const [rightDie, setRightDie] = useState<number>(getRandomNumber(leftDie));
+    const [rightDie, setRightDie] = useState<number>(getRandomNumber());
     const [gameState, setGameState] = useState<GameState>("PLAYING");
 
     const checkGameStatus = () => {

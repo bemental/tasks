@@ -6,7 +6,9 @@ import { RevealAnswer } from "./components/RevealAnswer";
 import { ChangeType } from "./components/ChangeType";
 import { StartAttempt } from "./components/StartAttempt";
 import TwoDice from "./components/TwoDice";
-import { CycleHoliday } from "./components/CycleHoliday"; // Make sure this path is correct
+import { CycleHoliday } from "./components/CycleHoliday";
+import { DoubleHalf } from "./bad-components/DoubleHalf";
+import { ShoveBox } from "./bad-components/ShoveBox";
 
 function App(): JSX.Element {
     return (
@@ -27,6 +29,7 @@ function App(): JSX.Element {
             <StartAttempt />
             <TwoDice />
             <CycleHoliday />
+            {/* <DoubleHalf /> */}
 
             {/* Inserting the list here */}
             <ul>
