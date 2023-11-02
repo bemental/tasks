@@ -6,7 +6,7 @@ import { RevealAnswer } from "./components/RevealAnswer";
 import { ChangeType } from "./components/ChangeType";
 import { StartAttempt } from "./components/StartAttempt";
 import TwoDice from "./components/TwoDice";
-import { CycleHoliday } from "./components/CycleHoliday"; // Make sure this path is correct
+import { CycleHoliday } from "./components/CycleHoliday";
 
 function App(): JSX.Element {
     return (
