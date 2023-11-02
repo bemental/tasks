@@ -1,26 +1,54 @@
 import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+
+export const COLORS = ["red", "blue", "green"];
+const DEFAULT_COLOR_INDEX = 0;
+
+interface ColorProps {
+    colorIndex: number;
+    setColorIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function ChangeColor({ colorIndex, setColorIndex }: ColorProps): JSX.Element {
+    return (
+        <Button onClick={() => setColorIndex((1 + colorIndex) % COLORS.length)}>
+            Next Color
+        </Button>
+    );
+}
+
+function ColorPreview({
+    colorIndex
+}: Pick<ColorProps, "colorIndex">): JSX.Element {
+    return (
+        <div
+            data-testid="colored-box"
+            style={{
+                width: "50px",
+                height: "50px",
+                backgroundColor: COLORS[colorIndex],
+                display: "inline-block",
+                verticalAlign: "bottom",
+                marginLeft: "5px"
+            }}
+        ></div>
+    );
+}
 
 export function ColoredBox(): JSX.Element {
-    const colors = ["red", "blue", "green"];
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    function handleButtonClick() {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % colors.length);
-    }
+    const [colorIndex, setColorIndex] = useState<number>(DEFAULT_COLOR_INDEX);
 
     return (
         <div>
-            <button onClick={handleButtonClick}>Next Color</button>
-            <div
-                data-testid="colored-box"
-                style={{
-                    backgroundColor: colors[currentIndex],
-                    width: "100px",
-                    height: "100px",
-                    display: "inline-block",
-                    marginLeft: "20px"
-                }}
-            ></div>
+            <h3>Colored Box</h3>
+            <span>The current color is: {COLORS[colorIndex]}</span>
+            <div>
+                <ChangeColor
+                    colorIndex={colorIndex}
+                    setColorIndex={setColorIndex}
+                />
+                <ColorPreview colorIndex={colorIndex} />
+            </div>
         </div>
     );
 }
